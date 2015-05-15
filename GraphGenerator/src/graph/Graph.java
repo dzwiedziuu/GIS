@@ -2,25 +2,25 @@ package graph;
 
 public class Graph
 {
-	private Vertex[] vertexes;
+	private Vertex[] vertices;
 
 	public Graph(int size)
 	{
-		vertexes = new Vertex[size];
+		vertices = new Vertex[size];
 	}
 
 	public Vertex getVertex(int i)
 	{
-		return vertexes[i];
+		return vertices[i];
 	}
 
 	public void setVertex(Vertex vertex, int i)
 	{
-		vertexes[i] = vertex;
+		vertices[i] = vertex;
 	}
 
 	public int getSize()
 	{
-		return vertexes.length;
+		return vertices.length;
 	}
 }
