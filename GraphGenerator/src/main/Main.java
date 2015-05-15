@@ -18,6 +18,7 @@ public class Main
 	private static final String OUTPUT_DIR = "od";
 	private static final String PROBABILITY = "p";
 	private static final String VERTEX_NUMBER = "v";
+	private static final String CONSOLE_OUTPUT = "c";
 
 	public static void main(String[] args)
 	{
@@ -31,8 +32,9 @@ public class Main
 			int vNum = Integer.parseInt(commandLine.getOptionValue(VERTEX_NUMBER));
 			double prob = Double.parseDouble(commandLine.getOptionValue(PROBABILITY));
 			graphGenerator.generateGraph(vNum, prob);
-			graphGenerator.storeGraph(createFile(commandLine.getOptionValue(OUTPUT_DIR),
-					commandLine.getOptionValue(OUTPUT_FILE)));
+			graphGenerator.storeGraph(
+					createFile(commandLine.getOptionValue(OUTPUT_DIR), commandLine.getOptionValue(OUTPUT_FILE)),
+					commandLine.hasOption(CONSOLE_OUTPUT));
 		} catch (ParseException e)
 		{
 			System.out.println(e.getMessage());
@@ -46,6 +48,8 @@ public class Main
 
 	private static File createFile(String outputDir, String outputFile)
 	{
+		if (outputFile == null)
+			return null;
 		return outputDir == null ? new File(outputFile) : new File(outputDir, outputFile);
 	}
 
@@ -57,7 +61,9 @@ public class Main
 				"Probability of creating edge between every two vertex"));
 		result.addOption(createOption(OUTPUT_DIR, "output_direcroty", true, "Directory where to store output graph",
 				false));
-		result.addOption(createOption(OUTPUT_FILE, "output_file", true, "File where to store output graph"));
+		result.addOption(createOption(OUTPUT_FILE, "output_file", true, "File where to store output graph", false));
+		result.addOption(createOption(CONSOLE_OUTPUT, "console_output", false, "If set, output is printed on console",
+				false));
 		return result;
 	}
 

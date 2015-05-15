@@ -5,11 +5,12 @@ Parameters:
 	-p - probability of creating edge between every two vertex
 	-od - directory where to store output graph
 	-of - file where to store output graph
+	-c - print output on console
 
 Syntax:
-application.jar -v NUMBER -p PROBABILITY [-od OUTPUT_PATH] -of OUTPUT_FILE
+application.jar -v NUMBER -p PROBABILITY [-od OUTPUT_PATH] [-of OUTPUT_FILE] [-c]
 
 Typical usage:
-application.jar -v 10 -p 0.2 -od "/home/user/temp_cat" -of "test_graph1.gra"
+application.jar -v 10 -p 0.2 -od "/home/user/temp_cat" -of "test_graph1.gra" -c
 
-Command above creates graph with 10 vertex, with probability of creating edge between each other 0.2 and saves it as file "/home/user/temp_cat/test_graph1.gra".
+Command above creates graph with 10 vertex, with probability of creating edge between each other 0.2, saves it as file "/home/user/temp_cat/test_graph1.gra" and print output at console.

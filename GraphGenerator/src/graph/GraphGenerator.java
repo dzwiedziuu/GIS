@@ -9,7 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
+import java.io.OutputStreamWriter;
 
 public class GraphGenerator
 {
@@ -23,13 +23,14 @@ public class GraphGenerator
 		graph = generatorStrategy.generate(vertexNumber, probability);
 	}
 
-	public void storeGraph(File file)
+	public void storeGraph(File file, boolean printConsole)
 	{
 		try
 		{
-			Writer writer = new BufferedWriter(new FileWriter(file));
-			// Writer writer = new BufferedWriter(new OutputStreamWriter(System.out));
-			storeStrategy.store(writer, graph);
+			if (printConsole)
+				storeStrategy.store(new BufferedWriter(new OutputStreamWriter(System.out)), graph);
+			if (file != null)
+				storeStrategy.store(new BufferedWriter(new FileWriter(file)), graph);
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
