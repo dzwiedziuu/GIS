@@ -40,6 +40,7 @@ public class Main
 			GraphColoringAlgorithm algorithm = new GraphColoringAlgorithm();
 			Graph graph = algorithm.readGraph(inputFile);
 			graph = algorithm.colorGraph(graph, initialTemp, minTemp, alfa);
+			algorithm.printResult(graph, commandLine.getOptionValue(OUTPUT_FILE), commandLine.hasOption(CONSOLE_OUTPUT));
 		} catch (ParseException e)
 		{
 			System.out.println(e);
