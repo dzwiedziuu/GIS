@@ -58,4 +58,8 @@ public class Vertex
 					}
 				}).toArray());
 	}
+
+	public Vertex copy() {
+		return new Vertex(this.id, this.color);
+	}
 }

@@ -8,13 +8,19 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Random;
 
+import main.Main;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import domain.Graph;
 import domain.Vertex;
 
 public class GraphColoringAlgorithm
 {
-	private Random random = new Random();
-	private ColoringStrategy coloringStrategy;
+	private static final Logger logger = LoggerFactory.getLogger(GraphColoringAlgorithm.class);
+	
+	private ColoringStrategy coloringStrategy= new DefaultColoringStrategy();
 
 	public Graph readGraph(String inputFile) throws IOException
 	{
@@ -31,7 +37,7 @@ public class GraphColoringAlgorithm
 		String line = reader.readLine();
 		if (line == null)
 			return null;
-		Graph graph = new Graph(line.length() - 2, random);
+		Graph graph = new Graph(line.length() - 2).init();
 		do
 		{
 			String[] parts = line.split(":");
@@ -47,6 +53,9 @@ public class GraphColoringAlgorithm
 
 	public Graph colorGraph(Graph graph, Long initialTemp, Long minTemp, Double alfa)
 	{
-		return coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa);
+		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa);
+		logger.info("Colored graph: " + g.getCurrentColoring());
+		logger.info("Stats: colors: " + g.getColorNumber() + ", number of incorrectPairs: " + g.getNumberOfIncorrectPairs());
+		return g; 
 	}
 }

@@ -10,6 +10,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PatternOptionBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import algorithm.GraphColoringAlgorithm;
 import domain.Graph;
@@ -22,7 +24,7 @@ public class Main
 	private static final String INPUT_FILE = "i";
 	private static final String CONSOLE_OUTPUT = "c";
 	private static final String OUTPUT_FILE = "o";
-
+	
 	public static void main(String[] args)
 	{
 		Options options = createOptions();
