@@ -50,7 +50,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 			Double probability = getProbability(newObjectFunctionValue);
 			if (probability > random.nextDouble())
 			{
-				if (newObjectFunctionValue == nextGraph.getColorNumber())
+				if (newObjectFunctionValue == nextGraph.getColorNumber() && (currentBestGraph == null || currentBestGraph.getColorNumber() > nextGraph.getColorNumber()))
 					currentBestGraph = nextGraph;
 				graph = nextGraph;
 				lastObjectiveFunctionValue = newObjectFunctionValue;
