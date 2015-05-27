@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 
 import domain.Graph;
 
-public interface PrintingStrategy {
-	public void printGraph(Graph g, BufferedWriter writer);
+public interface PrintingStrategy
+{
+	public void printGraph(Graph g, int worseStepsNext, BufferedWriter writer);
 }
