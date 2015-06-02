@@ -32,14 +32,19 @@ public class Main
 		HelpFormatter helpFormatter = new HelpFormatter();
 		try
 		{
+			//Wczytanie parametrów
 			CommandLine commandLine = parser.parse(options, args);
 			Double alfa = (Double) commandLine.getParsedOptionValue(ALFA);
 			Long initialTemp = (Long) commandLine.getParsedOptionValue(INITIAL_TEMP);
 			Long minTemp = (Long) commandLine.getParsedOptionValue(MIN_TEMP);
 			String inputFile = commandLine.getOptionValue(INPUT_FILE);
+			
+			// Inicjacja i uruchomienie
 			GraphColoringAlgorithm algorithm = new GraphColoringAlgorithm();
 			Graph graph = algorithm.readGraph(inputFile);
 			graph = algorithm.colorGraph(graph, initialTemp, minTemp, alfa);
+			
+			//Wypisanie wyników
 			algorithm.printResult(graph, commandLine.getOptionValue(OUTPUT_FILE), commandLine.hasOption(CONSOLE_OUTPUT));
 		} catch (ParseException e)
 		{
