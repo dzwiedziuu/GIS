@@ -35,8 +35,8 @@ public class Main
 			//Wczytanie parametrów
 			CommandLine commandLine = parser.parse(options, args);
 			Double alfa = (Double) commandLine.getParsedOptionValue(ALFA);
-			Long initialTemp = (Long) commandLine.getParsedOptionValue(INITIAL_TEMP);
-			Long minTemp = (Long) commandLine.getParsedOptionValue(MIN_TEMP);
+			Double initialTemp = (Double) commandLine.getParsedOptionValue(INITIAL_TEMP);
+			Double minTemp = (Double) commandLine.getParsedOptionValue(MIN_TEMP);
 			String inputFile = commandLine.getOptionValue(INPUT_FILE);
 			
 			// Inicjacja i uruchomienie
