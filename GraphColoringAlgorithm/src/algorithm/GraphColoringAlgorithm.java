@@ -64,12 +64,12 @@ public class GraphColoringAlgorithm
 	public void printResult(Graph g, String fileToSave, boolean printAtConsole)
 	{
 		if (printAtConsole)
-			printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), new BufferedWriter(
+			printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), coloringStrategy.getAlgorithmSteps(), new BufferedWriter(
 					new OutputStreamWriter(System.out)));
 		if (fileToSave != null)
 			try
 			{
-				printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), new BufferedWriter(new FileWriter(
+				printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), coloringStrategy.getAlgorithmSteps(), new BufferedWriter(new FileWriter(
 						fileToSave)));
 			} catch (IOException e)
 			{

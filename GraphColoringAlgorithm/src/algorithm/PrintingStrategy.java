@@ -6,5 +6,5 @@ import domain.Graph;
 
 public interface PrintingStrategy
 {
-	public void printGraph(Graph g, int worseStepsNext, BufferedWriter writer);
+	public void printGraph(Graph g, int worseStepsNext, long algorithmSteps, BufferedWriter writer);
 }

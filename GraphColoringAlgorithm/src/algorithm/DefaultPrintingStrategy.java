@@ -9,11 +9,11 @@ public class DefaultPrintingStrategy implements PrintingStrategy
 {
 
 	@Override
-	public void printGraph(Graph g, int worseStepsNext, BufferedWriter writer)
+	public void printGraph(Graph g, int worseStepsNext, long algorithmSteps, BufferedWriter writer)
 	{
 		try
 		{
-			writer.write("" + g.getColorNumber() + " " + worseStepsNext);
+			writer.write("" + g.getColorNumber() + " " + worseStepsNext + " " + algorithmSteps);
 			writer.flush();
 		} catch (IOException e)
 		{
