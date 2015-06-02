@@ -22,7 +22,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	private int worseNextSteps;
 
 	@Override
-	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa)
+	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k)
 	{
 		worseNextSteps = 0;
 		logger.trace(graph.getCurrentColoring());
@@ -30,37 +30,40 @@ public class DefaultColoringStrategy implements ColoringStrategy
 		lastObjectiveFunctionValue = getObjectiveFunction(graph);
 		for (currentTemp = initialTemp * 1.0; currentTemp > minTemp; currentTemp = currentTemp * alfa)
 		{
-			Graph nextGraph = graph.copy();
-			List<Vertex> listOfVertices = nextGraph.getListOfIncorrectVertices();
-			Set<Integer> colors = nextGraph.getAllColors();
-			Vertex currentVertex;
-			if (listOfVertices.isEmpty())
+			for(long epochLeft = k; epochLeft > 0; epochLeft--)
 			{
-				currentVertex = nextGraph.getVertex(random.nextInt(nextGraph.size()));
-				colors.add(nextNewColor++);
-			} else
-				currentVertex = listOfVertices.get(random.nextInt(listOfVertices.size()));
-			colors.remove(currentVertex.getColor());
-			Integer[] colorArray = colors.toArray(new Integer[colors.size()]);
-			Integer currentNewColor = colorArray[random.nextInt(colorArray.length)];
-			logger.trace("Vertex ID: " + currentVertex.getId() + ", old color: " + currentVertex.getColor()
-					+ ", new color: " + currentNewColor);
-			currentVertex.setColor(currentNewColor);
-			logger.trace(nextGraph.getCurrentColoring());
-			Integer newObjectFunctionValue = getObjectiveFunction(nextGraph);
-			Double probability = getProbability(newObjectFunctionValue);
-			boolean switched = false;
-			if (probability > random.nextDouble())
-			{
-				if (newObjectFunctionValue == nextGraph.getColorNumber()
-						&& (currentBestGraph == null || currentBestGraph.getColorNumber() > nextGraph.getColorNumber()))
-					currentBestGraph = nextGraph;
-				graph = nextGraph;
-				lastObjectiveFunctionValue = newObjectFunctionValue;
-				worseNextSteps++;
-				switched = true;
+				Graph nextGraph = graph.copy();
+				List<Vertex> listOfVertices = nextGraph.getListOfIncorrectVertices();
+				Set<Integer> colors = nextGraph.getAllColors();
+				Vertex currentVertex;
+				if (listOfVertices.isEmpty())
+				{
+					currentVertex = nextGraph.getVertex(random.nextInt(nextGraph.size()));
+					colors.add(nextNewColor++);
+				} else
+					currentVertex = listOfVertices.get(random.nextInt(listOfVertices.size()));
+				colors.remove(currentVertex.getColor());
+				Integer[] colorArray = colors.toArray(new Integer[colors.size()]);
+				Integer currentNewColor = colorArray[random.nextInt(colorArray.length)];
+				logger.trace("Vertex ID: " + currentVertex.getId() + ", old color: " + currentVertex.getColor()
+						+ ", new color: " + currentNewColor);
+				currentVertex.setColor(currentNewColor);
+				logger.trace(nextGraph.getCurrentColoring());
+				Integer newObjectFunctionValue = getObjectiveFunction(nextGraph);
+				Double probability = getProbability(newObjectFunctionValue);
+				boolean switched = false;
+				if (probability > random.nextDouble())
+				{
+					if (newObjectFunctionValue == nextGraph.getColorNumber()
+							&& (currentBestGraph == null || currentBestGraph.getColorNumber() > nextGraph.getColorNumber()))
+						currentBestGraph = nextGraph;
+					graph = nextGraph;
+					lastObjectiveFunctionValue = newObjectFunctionValue;
+					worseNextSteps++;
+					switched = true;
+				}
+				logger.trace("Graph switched? " + (switched ? "YES!" : "NO..."));
 			}
-			logger.trace("Graph switched? " + (switched ? "YES!" : "NO..."));
 		}
 		return currentBestGraph;
 	}

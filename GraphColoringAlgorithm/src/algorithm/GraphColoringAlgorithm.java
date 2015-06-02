@@ -52,9 +52,9 @@ public class GraphColoringAlgorithm
 		return graph;
 	}
 
-	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa)
+	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k)
 	{
-		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa);
+		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa, k);
 		logger.info("Colored graph: " + g.getCurrentColoring());
 		logger.info("Stats: colors: " + g.getColorNumber() + ", number of incorrectPairs: "
 				+ g.getNumberOfIncorrectPairs());
