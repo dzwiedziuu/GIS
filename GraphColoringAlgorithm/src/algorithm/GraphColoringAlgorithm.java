@@ -52,7 +52,7 @@ public class GraphColoringAlgorithm
 		return graph;
 	}
 
-	public Graph colorGraph(Graph graph, Long initialTemp, Long minTemp, Double alfa)
+	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa)
 	{
 		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa);
 		logger.info("Colored graph: " + g.getCurrentColoring());

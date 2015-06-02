@@ -22,7 +22,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	private int worseNextSteps;
 
 	@Override
-	public Graph colorGraph(Graph graph, Long initialTemp, Long minTemp, Double alfa)
+	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa)
 	{
 		worseNextSteps = 0;
 		logger.trace(graph.getCurrentColoring());
