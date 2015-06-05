@@ -23,11 +23,11 @@ public class GraphColoringAlgorithm
 	private ColoringStrategy coloringStrategy = new DefaultColoringStrategy();
 	private PrintingStrategy printingStrategy = new DefaultPrintingStrategy();
 
-	public Graph readGraph(String inputFile) throws IOException
+	public Graph readGraph(File inputFile) throws IOException
 	{
 		Reader reader = null;
 		if (inputFile != null)
-			reader = new FileReader(new File(inputFile));
+			reader = new FileReader(inputFile);
 		else
 			reader = new InputStreamReader(System.in);
 		return readGraph(new BufferedReader(reader));
@@ -56,25 +56,27 @@ public class GraphColoringAlgorithm
 	{
 		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa, k);
 		logger.info("Colored graph: " + g.getCurrentColoring());
-		logger.info("Stats: colors: " + g.getColorNumber() + ", number of incorrectPairs: "
-				+ g.getNumberOfIncorrectPairs());
+		logger.info("Stats: colors: " + g.getColorNumber() + ", number of incorrectPairs: " + g.getNumberOfIncorrectPairs());
 		return g;
 	}
 
-	public void printResult(Graph g, String fileToSave, boolean printAtConsole)
+	public AlgorithmResult printResult(Graph g, String fileToSave, boolean printAtConsole)
 	{
+		AlgorithmResult algorithmResult = new AlgorithmResult();
+		algorithmResult.colorNumber = g.getColorNumber();
+		algorithmResult.totalSteps = coloringStrategy.getAlgorithmSteps();
+		algorithmResult.worseSteps = coloringStrategy.getWorseNextSteps();
 		if (printAtConsole)
-			printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), coloringStrategy.getAlgorithmSteps(), new BufferedWriter(
-					new OutputStreamWriter(System.out)));
+			printingStrategy.printGraph(algorithmResult, new BufferedWriter(new OutputStreamWriter(System.out)));
 		if (fileToSave != null)
 			try
 			{
-				printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), coloringStrategy.getAlgorithmSteps(), new BufferedWriter(new FileWriter(
-						fileToSave)));
+				printingStrategy.printGraph(algorithmResult, new BufferedWriter(new FileWriter(fileToSave)));
 			} catch (IOException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		return algorithmResult;
 	}
 }

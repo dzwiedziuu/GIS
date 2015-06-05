@@ -3,17 +3,15 @@ package algorithm;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import domain.Graph;
-
 public class DefaultPrintingStrategy implements PrintingStrategy
 {
 
 	@Override
-	public void printGraph(Graph g, int worseStepsNext, long algorithmSteps, BufferedWriter writer)
+	public void printGraph(AlgorithmResult algorithmResult, BufferedWriter writer)
 	{
 		try
 		{
-			writer.write("" + g.getColorNumber() + " " + worseStepsNext + " " + algorithmSteps);
+			writer.write("" + algorithmResult.colorNumber + " " + algorithmResult.worseSteps + " " + algorithmResult.totalSteps);
 			writer.flush();
 		} catch (IOException e)
 		{

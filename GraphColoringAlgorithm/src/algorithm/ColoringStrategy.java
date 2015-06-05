@@ -8,5 +8,5 @@ public interface ColoringStrategy
 
 	public int getWorseNextSteps();
 
-	public long getAlgorithmSteps();
+	public int getAlgorithmSteps();
 }

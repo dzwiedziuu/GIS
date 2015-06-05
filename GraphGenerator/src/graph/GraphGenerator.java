@@ -18,9 +18,10 @@ public class GraphGenerator
 	private StoreStrategy storeStrategy = new DefaultStoreStrategy();
 	private Graph graph;
 
-	public void generateGraph(int vertexNumber, double probability)
+	public Graph generateGraph(int vertexNumber, double probability)
 	{
 		graph = generatorStrategy.generate(vertexNumber, probability);
+		return graph;
 	}
 
 	public void storeGraph(File file, boolean printConsole)

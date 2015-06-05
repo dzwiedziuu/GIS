@@ -22,7 +22,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	private Random random = new Random();
 	private int nextNewColor;
 	private int worseNextSteps;
-	private long algorithmSteps;
+	private int algorithmSteps;
 
 	@Override
 	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k)
@@ -101,7 +101,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	}
 
 	@Override
-	public long getAlgorithmSteps()
+	public int getAlgorithmSteps()
 	{
 		return algorithmSteps;
 	}
