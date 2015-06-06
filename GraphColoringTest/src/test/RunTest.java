@@ -37,23 +37,32 @@ public class RunTest
 			graphGenerator.storeGraph(new File(graphDir, i + ".gra"), false);
 		}
 		List<GroupResult> groupResults = new LinkedList<RunTest.GroupResult>();
+		GroupResult currentGroupResult = null;
+		GroupResult firstGroupResult = null;
 		for (; params.doNextTest(); params = params.nextTestParams())
 		{
-			logger.warn(params.toString());
-			List<AlgorithmResult> result = new LinkedList<AlgorithmResult>();
-			for (int i = 0; i < params.tries; i++)
+			logger2.warn(params.toString());
+			do
 			{
-				for (int j = 0; j < params.graphNumber; j++)
+				logger.warn(params.toString());
+				List<AlgorithmResult> result = new LinkedList<AlgorithmResult>();
+				for (int i = 0; i < params.tries; i++)
 				{
-					Graph g = graphColoringAlgorithm.readGraph(new File(graphDir, j + ".gra"));
-					g = graphColoringAlgorithm.colorGraph(g, params.initialTemperature, params.minimalTemperature, params.alpha, params.k);
-					AlgorithmResult algorithmResult = graphColoringAlgorithm.printResult(g, null, false);
-					result.add(algorithmResult);
-					logger2.info(algorithmResult.toString());
+					for (int j = 0; j < params.graphNumber; j++)
+					{
+						Graph g = graphColoringAlgorithm.readGraph(new File(graphDir, j + ".gra"));
+						g = graphColoringAlgorithm.colorGraph(g, params.initialTemperature, params.minimalTemperature, params.alpha, params.k,
+								params.bolzmanFactor);
+						AlgorithmResult algorithmResult = graphColoringAlgorithm.printResult(g, null, false);
+						result.add(algorithmResult);
+						logger2.info(algorithmResult.toString());
+					}
 				}
-			}
-			GroupResult groupResult = printResult(result, params.initialTemperature);
-			groupResults.add(groupResult);
+				currentGroupResult = printResult(result, params.initialTemperature);
+			} while (!params.iSatisfiedIfNotChange(currentGroupResult, firstGroupResult));
+			groupResults.add(currentGroupResult);
+			if (firstGroupResult == null)
+				firstGroupResult = currentGroupResult;
 		}
 		return groupResults;
 	}

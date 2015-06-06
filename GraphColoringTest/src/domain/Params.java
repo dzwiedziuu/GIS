@@ -1,5 +1,7 @@
 package domain;
 
+import test.RunTest.GroupResult;
+
 public abstract class Params
 {
 	public int vertexNumber;
@@ -8,8 +10,11 @@ public abstract class Params
 	public Double minimalTemperature;
 	public Double alpha;
 	public Long k;
+	public double bolzmanFactor;
 	public int graphNumber;
 	public int tries;
+	public int notSatisfiedTimes = 0;
+	public int satisfyLimie;
 
 	public abstract boolean doNextTest();
 
@@ -44,4 +49,7 @@ public abstract class Params
 	{
 		return "InitialTemp=" + initialTemperature + ", minimalTemp=" + minimalTemperature + ", alfa=" + alpha + ", k=" + k;
 	}
+
+	public abstract boolean iSatisfiedIfNotChange(GroupResult currentGroupResult, GroupResult lastGroupResult);
+
 }

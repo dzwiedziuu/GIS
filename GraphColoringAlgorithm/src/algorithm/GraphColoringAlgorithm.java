@@ -9,18 +9,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import domain.Graph;
-import domain.Vertex;
 
 public class GraphColoringAlgorithm
 {
 	private static final Logger logger = LoggerFactory.getLogger(GraphColoringAlgorithm.class);
 
-	private ColoringStrategy coloringStrategy = new DefaultColoringStrategy();
+	private ColoringStrategy coloringStrategy = new ArticleColoringStrategy();
 	private PrintingStrategy printingStrategy = new DefaultPrintingStrategy();
 
 	public Graph readGraph(File inputFile) throws IOException
@@ -43,18 +44,20 @@ public class GraphColoringAlgorithm
 		{
 			String[] parts = line.split(":");
 			Integer id = Integer.parseInt(parts[0]);
-			Vertex vertex = graph.getVertex(id);
+			List<Integer> neighbours = new LinkedList<Integer>();
 			for (int i = 0; i < parts[1].length(); i++)
 				if (parts[1].charAt(i) == '1')
-					vertex.getNeighbors().add(graph.getVertex(i));
+					neighbours.add(i);
+			graph.setVertexNeighbours(id, neighbours);
 			line = reader.readLine();
 		} while (line != null);
+		graph.refreshGraphStats();
 		return graph;
 	}
 
-	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k)
+	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k, Double bolzmanFactor)
 	{
-		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa, k);
+		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa, k, bolzmanFactor);
 		logger.info("Colored graph: " + g.getCurrentColoring());
 		logger.info("Stats: colors: " + g.getColorNumber() + ", number of incorrectPairs: " + g.getNumberOfIncorrectPairs());
 		return g;

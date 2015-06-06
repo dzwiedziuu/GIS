@@ -24,6 +24,7 @@ public class Main
 	private static final String CONSOLE_OUTPUT = "c";
 	private static final String OUTPUT_FILE = "o";
 	private static final String EPOCH_PARAM = "k";
+	private static final String BOLZMAN_FACTOR = "b";
 
 	public static void main(String[] args)
 	{
@@ -37,13 +38,14 @@ public class Main
 			Double alfa = (Double) commandLine.getParsedOptionValue(ALFA);
 			Double initialTemp = (Double) commandLine.getParsedOptionValue(INITIAL_TEMP);
 			Double minTemp = (Double) commandLine.getParsedOptionValue(MIN_TEMP);
+			Double bolzmanFactor = (Double) commandLine.getParsedOptionValue(BOLZMAN_FACTOR);
 			Long k = (Long) commandLine.getParsedOptionValue(EPOCH_PARAM);
 			String inputFile = commandLine.getOptionValue(INPUT_FILE);
 
 			// Inicjacja i uruchomienie
 			GraphColoringAlgorithm algorithm = new GraphColoringAlgorithm();
 			Graph graph = algorithm.readGraph(new File(inputFile));
-			graph = algorithm.colorGraph(graph, initialTemp, minTemp, alfa, k);
+			graph = algorithm.colorGraph(graph, initialTemp, minTemp, alfa, k, bolzmanFactor);
 
 			// Wypisanie wyników
 			algorithm.printResult(graph, commandLine.getOptionValue(OUTPUT_FILE), commandLine.hasOption(CONSOLE_OUTPUT));
@@ -64,6 +66,7 @@ public class Main
 		result.addOption(createOption(MIN_TEMP, "minimum_temperature", true, "Minimum value of temperature", PatternOptionBuilder.NUMBER_VALUE));
 		result.addOption(createOption(ALFA, "alfa", true, "cooling factor", PatternOptionBuilder.NUMBER_VALUE));
 		result.addOption(createOption(EPOCH_PARAM, "epochParam", true, "epoch param", PatternOptionBuilder.NUMBER_VALUE));
+		result.addOption(createOption(BOLZMAN_FACTOR, "bolzmanFactor", true, "Bolzman factor", PatternOptionBuilder.NUMBER_VALUE));
 		result.addOption(createOption(INPUT_FILE, "input_file", true,
 				"File where input graph is stored. If not specified, graph is taken from standard input.", false));
 		result.addOption(createOption(OUTPUT_FILE, "output_file", true, "File where to store output result", false));
