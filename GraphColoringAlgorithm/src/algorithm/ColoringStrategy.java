@@ -4,9 +4,9 @@ import domain.Graph;
 
 public interface ColoringStrategy
 {
-	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k);
+	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k, Double bolzmanFactor);
 
 	public int getWorseNextSteps();
 
-	public long getAlgorithmSteps();
+	public int getAlgorithmSteps();
 }

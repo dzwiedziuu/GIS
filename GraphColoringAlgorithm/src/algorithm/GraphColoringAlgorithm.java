@@ -9,25 +9,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import domain.Graph;
-import domain.Vertex;
 
 public class GraphColoringAlgorithm
 {
 	private static final Logger logger = LoggerFactory.getLogger(GraphColoringAlgorithm.class);
 
-	private ColoringStrategy coloringStrategy = new DefaultColoringStrategy();
+	private ColoringStrategy coloringStrategy = new ArticleColoringStrategy();
 	private PrintingStrategy printingStrategy = new DefaultPrintingStrategy();
 
-	public Graph readGraph(String inputFile) throws IOException
+	public Graph readGraph(File inputFile) throws IOException
 	{
 		Reader reader = null;
 		if (inputFile != null)
-			reader = new FileReader(new File(inputFile));
+			reader = new FileReader(inputFile);
 		else
 			reader = new InputStreamReader(System.in);
 		return readGraph(new BufferedReader(reader));
@@ -43,38 +44,42 @@ public class GraphColoringAlgorithm
 		{
 			String[] parts = line.split(":");
 			Integer id = Integer.parseInt(parts[0]);
-			Vertex vertex = graph.getVertex(id);
+			List<Integer> neighbours = new LinkedList<Integer>();
 			for (int i = 0; i < parts[1].length(); i++)
 				if (parts[1].charAt(i) == '1')
-					vertex.getNeighbors().add(graph.getVertex(i));
+					neighbours.add(i);
+			graph.setVertexNeighbours(id, neighbours);
 			line = reader.readLine();
 		} while (line != null);
+		graph.refreshGraphStats();
 		return graph;
 	}
 
-	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k)
+	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k, Double bolzmanFactor)
 	{
-		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa, k);
+		Graph g = coloringStrategy.colorGraph(graph, initialTemp, minTemp, alfa, k, bolzmanFactor);
 		logger.info("Colored graph: " + g.getCurrentColoring());
-		logger.info("Stats: colors: " + g.getColorNumber() + ", number of incorrectPairs: "
-				+ g.getNumberOfIncorrectPairs());
+		logger.info("Stats: colors: " + g.getColorNumber() + ", number of incorrectPairs: " + g.getNumberOfIncorrectPairs());
 		return g;
 	}
 
-	public void printResult(Graph g, String fileToSave, boolean printAtConsole)
+	public AlgorithmResult printResult(Graph g, String fileToSave, boolean printAtConsole)
 	{
+		AlgorithmResult algorithmResult = new AlgorithmResult();
+		algorithmResult.colorNumber = g.getColorNumber();
+		algorithmResult.totalSteps = coloringStrategy.getAlgorithmSteps();
+		algorithmResult.worseSteps = coloringStrategy.getWorseNextSteps();
 		if (printAtConsole)
-			printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), coloringStrategy.getAlgorithmSteps(), new BufferedWriter(
-					new OutputStreamWriter(System.out)));
+			printingStrategy.printGraph(algorithmResult, new BufferedWriter(new OutputStreamWriter(System.out)));
 		if (fileToSave != null)
 			try
 			{
-				printingStrategy.printGraph(g, coloringStrategy.getWorseNextSteps(), coloringStrategy.getAlgorithmSteps(), new BufferedWriter(new FileWriter(
-						fileToSave)));
+				printingStrategy.printGraph(algorithmResult, new BufferedWriter(new FileWriter(fileToSave)));
 			} catch (IOException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		return algorithmResult;
 	}
 }
