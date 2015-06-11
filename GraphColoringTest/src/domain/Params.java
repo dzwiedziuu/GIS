@@ -14,7 +14,7 @@ public abstract class Params
 	public int graphNumber;
 	public int tries;
 	public int notSatisfiedTimes = 0;
-	public int satisfyLimie;
+	public int satisfyLimit;
 
 	public abstract boolean doNextTest();
 

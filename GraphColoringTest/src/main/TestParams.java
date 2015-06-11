@@ -7,19 +7,19 @@ public class TestParams extends Params
 {
 	public TestParams()
 	{
-		this.alpha = 0.8;
+		this.alpha = 0.95;
 		this.initialTemperature = 1.0;
-		this.minimalTemperature = 0.001;
-		this.k = 100l;
-		this.vertexNumber = 20;
-		this.probability = 0.4;
-		this.graphNumber = 5;
-		this.tries = 5;
-		this.satisfyLimie = 5;
+		this.minimalTemperature = 0.01;
+		this.k = 20l;
+		this.vertexNumber = 30;
+		this.probability = 0.2;
+		this.graphNumber = 10;
+		this.tries = 10;
+		this.satisfyLimit = 5;
 		this.bolzmanFactor = 0.1;
 	}
 
-	public static double factor = 3;
+	public static double factor = 2;
 
 	@Override
 	public boolean doNextTest()
@@ -60,7 +60,7 @@ public class TestParams extends Params
 		double factor = difference > 0 ? 1 : -1;
 		double ratio = difference / firstGroupResult.betterSteps;
 		ratio = Math.abs(ratio);
-		if (ratio > 0.01)
+		if (ratio > 0.01 && satisfyLimit > notSatisfiedTimes)
 		{
 			this.minimalTemperature = this.minimalTemperature / Math.pow(this.alpha, difference / this.k);
 			notSatisfiedTimes++;
