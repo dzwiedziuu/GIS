@@ -24,6 +24,8 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	private int worseNextSteps;
 	private int algorithmSteps;
 
+	private int firstNTries;
+
 	@Override
 	public Graph colorGraph(Graph graph, Double initialTemp, Double minTemp, Double alfa, Long k, Double bolzmanFactor)
 	{
@@ -32,9 +34,9 @@ public class DefaultColoringStrategy implements ColoringStrategy
 		nextNewColor = graph.size();
 		lastObjectiveFunctionValue = getObjectiveFunction(graph);
 		algorithmSteps = 0;
-		for (currentTemp = initialTemp * 1.0; currentTemp > minTemp; currentTemp = currentTemp * alfa)
+		for (currentTemp = initialTemp * 1.0; currentTemp > minTemp && algorithmSteps < firstNTries; currentTemp = currentTemp * alfa)
 		{
-			for (long epochLeft = k; epochLeft > 0; epochLeft--)
+			for (long epochLeft = k; epochLeft > 0 && algorithmSteps < firstNTries; epochLeft--)
 			{
 				algorithmSteps++;
 				List<Vertex> listOfVertices = graph.getListOfIncorrectVertices();
@@ -103,5 +105,11 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	public int getAlgorithmSteps()
 	{
 		return algorithmSteps;
+	}
+
+	@Override
+	public void setFirstNTries(int firstNTries)
+	{
+		this.firstNTries = firstNTries;
 	}
 }

@@ -44,7 +44,7 @@ public class Main
 
 			// Inicjacja i uruchomienie
 			GraphColoringAlgorithm algorithm = new GraphColoringAlgorithm();
-			Graph graph = algorithm.readGraph(new File(inputFile));
+			Graph graph = algorithm.readGraph(new File(inputFile), null);
 			graph = algorithm.colorGraph(graph, initialTemp, minTemp, alfa, k, bolzmanFactor);
 
 			// Wypisanie wyników

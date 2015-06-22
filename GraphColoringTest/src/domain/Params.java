@@ -12,9 +12,11 @@ public abstract class Params
 	public Long k;
 	public double bolzmanFactor;
 	public int graphNumber;
-	public int tries;
+	public int paramTesttries;
+	public int algorithmTries;
 	public int notSatisfiedTimes = 0;
 	public int satisfyLimit;
+	public int initialColorNumber;
 
 	public abstract boolean doNextTest();
 
@@ -33,7 +35,9 @@ public abstract class Params
 			result.probability = this.probability;
 			result.vertexNumber = this.vertexNumber;
 			result.graphNumber = this.graphNumber;
-			result.tries = this.tries;
+			result.paramTesttries = this.paramTesttries;
+			result.initialColorNumber = this.initialColorNumber;
+			result.algorithmTries = this.algorithmTries;
 			return result;
 		} catch (InstantiationException | IllegalAccessException e)
 		{
@@ -50,6 +54,6 @@ public abstract class Params
 		return "InitialTemp=" + initialTemperature + ", minimalTemp=" + minimalTemperature + ", alfa=" + alpha + ", k=" + k;
 	}
 
-	public abstract boolean iSatisfiedIfNotChange(GroupResult currentGroupResult, GroupResult lastGroupResult);
+	public abstract boolean iSatisfiedIfNotChange(GroupResult currentGroupResult, GroupResult firstGroupResult, GroupResult lastGroupResult);
 
 }
