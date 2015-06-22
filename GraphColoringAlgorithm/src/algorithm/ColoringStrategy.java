@@ -9,4 +9,6 @@ public interface ColoringStrategy
 	public int getWorseNextSteps();
 
 	public int getAlgorithmSteps();
+
+	public void setFirstNTries(int firstNTries);
 }

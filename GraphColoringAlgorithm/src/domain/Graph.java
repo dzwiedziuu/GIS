@@ -34,11 +34,13 @@ public class Graph
 		edges = new Edge[vertices.length][vertices.length];
 	}
 
-	public Graph init()
+	public Graph init(Integer initialColorNumber)
 	{
+		if (initialColorNumber == null)
+			initialColorNumber = vertices.length;
 		for (int i = 0; i < vertices.length; i++)
 		{
-			int newColor = random.nextInt(vertices.length);
+			int newColor = random.nextInt(initialColorNumber);
 			vertices[i] = new Vertex(i, newColor);
 		}
 		return this;
@@ -81,6 +83,7 @@ public class Graph
 				e = new Edge(vertices[id1], vertices[id2]);
 				edges[id1][id2] = e;
 			}
+			list.add(e);
 		}
 		vertices[id].setEdges(list);
 	}
