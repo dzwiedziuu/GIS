@@ -1,5 +1,7 @@
 package algorithm;
 
+import java.util.List;
+
 import domain.Graph;
 
 public interface ColoringStrategy
@@ -11,4 +13,6 @@ public interface ColoringStrategy
 	public int getAlgorithmSteps();
 
 	public void setFirstNTries(int firstNTries);
+	
+	public List<Integer> getJumpList();
 }

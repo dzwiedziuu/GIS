@@ -81,6 +81,7 @@ public class GraphColoringAlgorithm
 		algorithmResult.colorNumber = g == null ? Integer.MAX_VALUE : g.getColorNumber();
 		algorithmResult.totalSteps = coloringStrategy.getAlgorithmSteps();
 		algorithmResult.worseSteps = coloringStrategy.getWorseNextSteps();
+		algorithmResult.jumpList   = coloringStrategy.getJumpList();
 		if (printAtConsole)
 			printingStrategy.printGraph(algorithmResult, new BufferedWriter(new OutputStreamWriter(System.out)));
 		if (fileToSave != null)

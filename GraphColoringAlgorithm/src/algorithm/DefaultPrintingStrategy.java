@@ -2,6 +2,7 @@ package algorithm;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ListIterator;
 
 public class DefaultPrintingStrategy implements PrintingStrategy
 {
@@ -11,7 +12,14 @@ public class DefaultPrintingStrategy implements PrintingStrategy
 	{
 		try
 		{
-			writer.write("" + algorithmResult.colorNumber + " " + algorithmResult.worseSteps + " " + algorithmResult.totalSteps);
+			writer.write("" + algorithmResult.colorNumber + " " + algorithmResult.worseSteps + " " + algorithmResult.totalSteps + "\n");
+
+			ListIterator<Integer> it = algorithmResult.jumpList.listIterator();
+			while (it.hasNext())
+			{
+				if (it.nextIndex() != 0)  writer.write(" ");
+				writer.write(it.next().toString());
+			}
 			writer.flush();
 		} catch (IOException e)
 		{

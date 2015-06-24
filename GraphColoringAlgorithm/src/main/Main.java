@@ -46,6 +46,7 @@ public class Main
 			GraphColoringAlgorithm algorithm = new GraphColoringAlgorithm();
 			Graph graph = algorithm.readGraph(new File(inputFile), null);
 			graph = algorithm.colorGraph(graph, initialTemp, minTemp, alfa, k, bolzmanFactor);
+			//graph = algorithm.colorGraphOnlyFirstNTries(graph, initialTemp, minTemp, alfa, k, bolzmanFactor, 1000);
 
 			// Wypisanie wyników
 			algorithm.printResult(graph, commandLine.getOptionValue(OUTPUT_FILE), commandLine.hasOption(CONSOLE_OUTPUT));

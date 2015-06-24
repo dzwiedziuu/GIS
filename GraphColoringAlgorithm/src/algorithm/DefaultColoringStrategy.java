@@ -1,5 +1,6 @@
 package algorithm;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -23,6 +24,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	private int nextNewColor;
 	private int worseNextSteps;
 	private int algorithmSteps;
+	public List<Integer> jumps = new LinkedList<Integer>();
 
 	private int firstNTries;
 
@@ -58,7 +60,8 @@ public class DefaultColoringStrategy implements ColoringStrategy
 				Integer newObjectFunctionValue = getObjectiveFunction(graph);
 				Double probability = getProbability(newObjectFunctionValue, bolzmanFactor);
 				boolean switched = false;
-				if (probability > random.nextDouble())
+				boolean doJump = probability > random.nextDouble();
+				if (doJump)
 				{
 					if (graph.isLegal() && (currentBestGraph == null || currentBestGraph.getColorNumber() > graph.getColorNumber()))
 						currentBestGraph = graph.copy();
@@ -68,6 +71,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 					switched = true;
 				} else
 					graph.setVertexColor(currentVertexIdx, oldColor);
+				addJumpInfo(switched);
 				logger.trace("Graph switched? " + (switched ? "YES!" : "NO..."));
 			}
 		}
@@ -112,4 +116,12 @@ public class DefaultColoringStrategy implements ColoringStrategy
 	{
 		this.firstNTries = firstNTries;
 	}
+	
+	private void addJumpInfo(boolean jumpOccured)
+	{
+		if (jumpOccured) jumps.add(1); else jumps.add(0);
+	}
+	
+	@Override
+	public List<Integer> getJumpList() { return jumps; }
 }
