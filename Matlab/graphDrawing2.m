@@ -55,7 +55,7 @@ end
 kolTitle = [ 'Graf n = ' int2str(ggVertexNum) ', p = ' num2str(ggProbability,'%.2f') ', k = ' int2str(gcaKParam) ', a = ' num2str(gcaAlfa) ];
 
 figure;
-scatter(data(:,1), data(:,2),'r', data(:,1), data(:,3),'b');
+plot(data(:,1), data(:,2),'r', data(:,1), data(:,3),'b');
 title(kolTitle);
 legend('Liczba skoków w górê');
 xlabel('Temperatura pocz¹tkowa') % x-axis label

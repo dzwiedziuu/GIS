@@ -63,14 +63,16 @@ public class DefaultColoringStrategy implements ColoringStrategy
 				boolean doJump = probability > random.nextDouble();
 				if (doJump)
 				{
-					if (graph.isLegal() && (currentBestGraph == null || currentBestGraph.getColorNumber() > graph.getColorNumber()))
-						currentBestGraph = graph.copy();
+					//if (graph.isLegal() && (currentBestGraph == null || currentBestGraph.getColorNumber() > graph.getColorNumber()))
+					//	currentBestGraph = graph.copy();
 					lastObjectiveFunctionValue = newObjectFunctionValue;
 					if (probability != MAX_PROBABILITY)
 						worseNextSteps++;
 					switched = true;
 				} else
 					graph.setVertexColor(currentVertexIdx, oldColor);
+				if (graph.isLegal() && (currentBestGraph == null || currentBestGraph.getColorNumber() > graph.getColorNumber()))
+					currentBestGraph = graph.copy();
 				addJumpInfo(switched);
 				logger.trace("Graph switched? " + (switched ? "YES!" : "NO..."));
 			}
