@@ -57,17 +57,21 @@ public class Graph
 			putNewOrAddToMap(incorrectEdgesCntMap, oldColor, 0, -oldIncorrectEdges.size());
 		}
 		numberOfIncorrectEdges -= oldIncorrectEdges.size();
+		if(!oldIncorrectEdges.isEmpty())
+			incorrectVertices.remove(vertices[vertexIdx]);
 
 		vertices[vertexIdx].setColor(currentNewColor);
 
 		putNewOrAddToMap(colorCntMap, currentNewColor, 1, 1);
 		List<Edge> newIncorrectEdges = vertices[vertexIdx].getIncorrectEdges();
-		for (Edge e : oldIncorrectEdges)
+		for (Edge e : newIncorrectEdges)
 		{
 			incorrectVertices.add(e.getAnother(vertexIdx));
-			putNewOrAddToMap(incorrectEdgesCntMap, currentNewColor, oldIncorrectEdges.size(), oldIncorrectEdges.size());
+			putNewOrAddToMap(incorrectEdgesCntMap, currentNewColor, newIncorrectEdges.size(), newIncorrectEdges.size());
 		}
 		numberOfIncorrectEdges += newIncorrectEdges.size();
+		if(!newIncorrectEdges.isEmpty())
+			incorrectVertices.add(vertices[vertexIdx]);
 	}
 
 	public void setVertexNeighbours(Integer id, List<Integer> neighbours)
@@ -96,10 +100,10 @@ public class Graph
 			List<Edge> incorrectEdges = v.getIncorrectEdges();
 			if (!incorrectEdges.isEmpty())
 				incorrectVertices.add(v);
-			int incorrectEdgesCnt = incorrectVertices.size();
+			int incorrectEdgesCnt = incorrectEdges.size();
 			for (Edge e : incorrectEdges)
 			{
-				putNewOrAddToMap(incorrectEdgesCntMap, v.getColor(), incorrectEdgesCnt, incorrectEdgesCnt);
+				putNewOrAddToMap(incorrectEdgesCntMap, e.begin.getColor(), 1, 1);
 			}
 			numberOfIncorrectEdges += incorrectEdgesCnt;
 		}
@@ -108,6 +112,7 @@ public class Graph
 		Map<Integer, Integer> normalilzedIncorrectEdgesMap = new LinkedHashMap<Integer, Integer>();
 		for (Integer color : incorrectEdgesCntMap.keySet())
 			normalilzedIncorrectEdgesMap.put(color, incorrectEdgesCntMap.get(color) / 2);
+		incorrectEdgesCntMap = normalilzedIncorrectEdgesMap;
 	}
 
 	// //
@@ -150,6 +155,7 @@ public class Graph
 	public Graph copy()
 	{
 		Graph g = new Graph(this.vertices.length);
+		g.graphId++;
 		for (int i = 0; i < g.vertices.length; i++)
 			g.vertices[i] = this.vertices[i].copy();
 		for (int i = 0; i < g.vertices.length; i++)

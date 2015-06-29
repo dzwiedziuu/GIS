@@ -2,7 +2,7 @@ package domain;
 
 public class Edge
 {
-	private Vertex begin;
+	public Vertex begin;
 	private Vertex end;
 
 	public Edge(Vertex first, Vertex second)

@@ -49,7 +49,7 @@ public class DefaultColoringStrategy implements ColoringStrategy
 					currentVertexIdx = random.nextInt(graph.size());
 					colors.add(nextNewColor++);
 				} else
-					currentVertexIdx = random.nextInt(listOfVertices.size());
+					currentVertexIdx = listOfVertices.get(random.nextInt(listOfVertices.size())).id;
 				int oldColor = graph.getVertexColor(currentVertexIdx);
 				colors.remove(oldColor);
 				Integer[] colorArray = colors.toArray(new Integer[colors.size()]);

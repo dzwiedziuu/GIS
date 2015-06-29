@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public class Vertex
 {
-	private int id; // id
+	public int id; // id
 	private int color; // color
 	private List<Edge> edges;
 
@@ -21,7 +21,7 @@ public class Vertex
 	{
 		List<Edge> result = new LinkedList<Edge>();
 		for (Edge e : edges)
-			if (e.isCorrect())
+			if (!e.isCorrect())
 				result.add(e);
 		return result;
 	}
